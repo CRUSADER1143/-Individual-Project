@@ -83,13 +83,37 @@
        
        
        
-    
+       
+	  public static void word1(String args) throws FileNotFoundException {
+          File file=new File(args);                  //读取文件
+         Scanner input=new Scanner(file);
+          HashMap<String,Integer> hashMap=new HashMap<String,Integer>();
+          while(input.hasNextLine()) {
+              String line=input.nextLine();
+              String[] lineWords=line.split("\\W+");          
+              Set<String> wordSet=hashMap.keySet();
+              for(int i=0;i<lineWords.length;i++) {
+                  if(wordSet.contains(lineWords[i])) {
+                      Integer number=hashMap.get(lineWords[i]);
+                      number++;
+                      hashMap.put(lineWords[i], number);  
+                      }
+                  else {
+                      hashMap.put(lineWords[i], 1);
+                  }
+              }
+          }
+          for (String key : hashMap.keySet()) {
+              System.out.println(key+"出现："+hashMap.get(key)+"次");
+          }
+      }
      
      
      public static void menu() {
          System.out.println("*****************************");
          System.out.println("欢迎访问本系统");
          System.out.println("1.统计字母出现频率");
+         System.out.println("2.统计不重复单词情况");
          System.out.println("0.退出");
          System.out.println("*****************************");
          System.out.println("请选择：");
@@ -105,6 +129,7 @@
          switch(a)
          {
          case 1:wf(args[1]);break;
+         case 2:word1(args[1]);break;
          case 0:a=0;break;
          default:a=0;break;
          }
